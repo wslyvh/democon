@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import { Header } from '../components/Header';
-import { Home } from '../pages/Home';
-import { Speakers } from '../pages/Speakers';
+import { Header } from 'components/Header';
+import { Home } from 'pages/Home';
+import { Speakers } from 'pages/Speakers';
 
 export function Default() {
   return (

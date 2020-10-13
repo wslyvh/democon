@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './assets/main.css';
-import { Default } from './layouts/Default';
-import * as serviceWorker from './serviceWorker';
+import { EventContextProvider } from 'context/EventContextProvider';
+import { Default } from 'layouts/Default';
+import * as serviceWorker from 'serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Default />
+    <EventContextProvider>
+      <Default />
+    </EventContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
