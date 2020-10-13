@@ -1,5 +1,6 @@
 import React from "react"
 import { useEventInfo } from "hooks/useEventInfo";
+import { Link } from "react-router-dom";
 
 export function Header() {
   const event = useEventInfo();
@@ -7,16 +8,16 @@ export function Header() {
     return (
       <header>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <a className="navbar-brand" href="/">
+          <Link to="/" className="navbar-brand">
             DemoCon
-          </a>
+          </Link>
           <small className="text-muted">{event?.from.toLocaleDateString()}</small>
           <div className="ml-auto mr-1">
             <ul className="navbar-nav text-right">
               <li className="nav-item">
-                <a href="/speakers" className="nav-link">
+                <Link to="/speakers" className="nav-link">
                   Speakers
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

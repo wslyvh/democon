@@ -43,7 +43,7 @@ export default {
           count: result.data.count,
           next: result.data.next,
           previous: result.data.previous,
-          data: Array.from(result.data.results).map(i => toSubmission(i)),
+          data: Array.from(result.data.results).map((i) => toSubmission(i)),
         };
       }
     } catch (ex) {

@@ -1,27 +1,31 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { Header } from 'components/Header';
-import { Home } from 'pages/Home';
-import { Speakers } from 'pages/Speakers';
+import { Loader } from 'components/Loader';
+
+const HomePage = lazy(() => import('pages/Home'));
+const SpeakersPage = lazy(() => import('pages/Speakers'));
 
 export function Default() {
   return (
     <div>
-      <Header />
+      <BrowserRouter>
+        <Header />
 
-      <div className="container">
-        <BrowserRouter>
+        <Suspense fallback={<Loader />}>
           <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route exact path="/speakers">
-              <Speakers />
-            </Route>
-            <Redirect to="/" />
+            <div className="container">
+              <Route exact path="/">
+                <HomePage />
+              </Route>
+              <Route exact path="/speakers">
+                <SpeakersPage />
+              </Route>
+              <Redirect to="/" />
+            </div>
           </Switch>
-        </BrowserRouter>
-      </div>
+        </Suspense>
+      </BrowserRouter>
     </div>
   );
 }
