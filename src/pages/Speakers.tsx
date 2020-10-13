@@ -1,9 +1,9 @@
 import React from 'react';
 
-export function Home() {
+export function Speakers() {
   return (
     <div>
-      <p>Home</p>
+      <p>Speaker overview</p>
     </div>
   );
 }
