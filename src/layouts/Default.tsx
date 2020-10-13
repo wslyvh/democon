@@ -13,17 +13,17 @@ export function Default() {
         <Header />
 
         <Suspense fallback={<Loader />}>
-          <Switch>
-            <div className="container">
+          <div className="container">
+            <Switch>
               <Route exact path="/">
                 <HomePage />
               </Route>
-              <Route exact path="/speakers">
+              <Route path="/speakers">
                 <SpeakersPage />
               </Route>
               <Redirect to="/" />
-            </div>
-          </Switch>
+            </Switch>
+          </div>
         </Suspense>
       </BrowserRouter>
     </div>

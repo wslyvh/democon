@@ -1,1 +1,1 @@
-export { SpeakerOverview } from './SpeakerOverview'
+export { SpeakerOverview } from './SpeakerOverview';
