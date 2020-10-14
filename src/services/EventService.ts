@@ -9,6 +9,7 @@ export default {
   GetTalks,
   GetTalk,
   GetSpeakers,
+  GetEventDates,
 };
 
 async function GetEventInfo(): Promise<EventInfo | undefined> {
@@ -25,9 +26,9 @@ async function GetEventInfo(): Promise<EventInfo | undefined> {
 }
 
 async function GetTalks(
-  state: string = '',
-  content_locale: string = '',
-  type: string,
+  state?: string,
+  content_locale?: string,
+  type?: string,
   limit: number = 25,
   offset: number = 0
 ): Promise<PagedResult<Array<Submission>> | undefined> {
@@ -49,7 +50,9 @@ async function GetTalks(
         count: result.data.count,
         next: result.data.next,
         previous: result.data.previous,
-        data: Array.from(result.data.results).map((i) => toSubmission(i)),
+        data: Array.from(result.data.results)
+          .map((i) => toSubmission(i))
+          .sort((a, b) => a.slot.start.getTime() - b.slot.start.getTime()),
       };
     }
   } catch (ex) {
@@ -109,6 +112,16 @@ async function GetSpeakers(
   } catch (ex) {
     console.error('error fetching speakers', ex);
   }
+}
+
+function GetEventDates(submissions: Array<Submission>): Array<Date> {
+  const allDates = submissions.map((i) => i.slot.start.toDateString());
+  const uniqueDates = allDates.filter(
+    (item: string, index: number, array: string[]) =>
+      array.findIndex((i) => i === item) === index
+  );
+
+  return uniqueDates.map((i) => new Date(i));
 }
 
 function toEventInfo(source: any): EventInfo {

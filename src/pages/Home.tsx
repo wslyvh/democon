@@ -1,3 +1,4 @@
+import { SubmissionOverview } from 'components/SubmissionOverview';
 import React from 'react';
 
 export default function Home() {
@@ -6,7 +7,7 @@ export default function Home() {
       <h2>Home</h2>
 
       <div>
-        <p>Hello world</p>
+        <SubmissionOverview />
       </div>
     </div>
   );
