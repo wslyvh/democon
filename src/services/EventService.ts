@@ -5,83 +5,87 @@ import { Speaker } from 'types/Speaker';
 import { Room, Slot, Submission } from 'types/Submission';
 
 export default {
-  GetEventInfo: async function (): Promise<EventInfo | undefined> {
-    try {
-      const result = await axios.get(`https://pretalx.com/api/events/democon/`);
-
-      console.log(result);
-      if (result.status === 200) {
-        return toEventInfo(result.data);
-      }
-    } catch (ex) {
-      console.error('error fetching account balance', ex);
-    }
-  },
-
-  GetTalks: async function (
-    state: string = '',
-    content_locale: string = '',
-    type: string,
-    limit: number = 25,
-    offset: number = 0
-  ): Promise<PagedResult<Array<Submission>> | undefined> {
-    try {
-      let filter = '?';
-      if (state) filter += '&state=' + state;
-      if (content_locale) filter += '&content_locale=' + content_locale;
-      if (type) filter += '&submission_type=' + type;
-      if (limit) filter += '&limit=' + limit;
-      if (offset) filter += '&offset=' + offset;
-
-      const result = await axios.get(
-        `https://pretalx.com/api/events/democon/talks/` + filter
-      );
-
-      console.log(result);
-      if (result.status === 200) {
-        return {
-          count: result.data.count,
-          next: result.data.next,
-          previous: result.data.previous,
-          data: Array.from(result.data.results).map((i) => toSubmission(i)),
-        };
-      }
-    } catch (ex) {
-      console.error('error fetching account balance', ex);
-    }
-  },
-
-  GetSpeakers: async function (
-    username: string = '',
-    email: string = '',
-    limit: number = 25,
-    offset: number = 0
-  ): Promise<PagedResult<Array<Speaker>> | undefined> {
-    try {
-      let filter = '?';
-      if (username) filter += '&user__name=' + username;
-      if (email) filter += '&user__email=' + email;
-      if (limit) filter += '&limit=' + limit;
-      if (offset) filter += '&offset=' + offset;
-
-      const result = await axios.get(
-        `https://pretalx.com/api/events/democon/speakers/` + filter
-      );
-
-      console.log(result);
-      if (result.status === 200) {
-        return {
-          count: result.data.count,
-          next: result.data.next,
-          previous: result.data.previous,
-          data: Array.from(result.data.results).map((i) => toSpeaker(i)),
-        };
-      }
-    } catch (ex) {
-      console.error('error fetching account balance', ex);
-    }
-  },
+  GetEventInfo,
+  GetTalks,
+  GetSpeakers,
 };
+
+async function GetEventInfo(): Promise<EventInfo | undefined> {
+  try {
+    const result = await axios.get(`https://pretalx.com/api/events/democon/`);
+
+    console.log(result);
+    if (result.status === 200) {
+      return toEventInfo(result.data);
+    }
+  } catch (ex) {
+    console.error('error fetching event info', ex);
+  }
+}
+
+async function GetTalks(
+  state: string = '',
+  content_locale: string = '',
+  type: string,
+  limit: number = 25,
+  offset: number = 0
+): Promise<PagedResult<Array<Submission>> | undefined> {
+  try {
+    let filter = '?';
+    if (state) filter += '&state=' + state;
+    if (content_locale) filter += '&content_locale=' + content_locale;
+    if (type) filter += '&submission_type=' + type;
+    if (limit) filter += '&limit=' + limit;
+    if (offset) filter += '&offset=' + offset;
+
+    const result = await axios.get(
+      `https://pretalx.com/api/events/democon/talks/` + filter
+    );
+
+    console.log(result);
+    if (result.status === 200) {
+      return {
+        count: result.data.count,
+        next: result.data.next,
+        previous: result.data.previous,
+        data: Array.from(result.data.results).map((i) => toSubmission(i)),
+      };
+    }
+  } catch (ex) {
+    console.error('error fetching talks', ex);
+  }
+}
+
+async function GetSpeakers(
+  username: string = '',
+  email: string = '',
+  limit: number = 25,
+  offset: number = 0
+): Promise<PagedResult<Array<Speaker>> | undefined> {
+  try {
+    let filter = '?';
+    if (username) filter += '&user__name=' + username;
+    if (email) filter += '&user__email=' + email;
+    if (limit) filter += '&limit=' + limit;
+    if (offset) filter += '&offset=' + offset;
+
+    const result = await axios.get(
+      `https://pretalx.com/api/events/democon/speakers/` + filter
+    );
+
+    console.log(result);
+    if (result.status === 200) {
+      return {
+        count: result.data.count,
+        next: result.data.next,
+        previous: result.data.previous,
+        data: Array.from(result.data.results).map((i) => toSpeaker(i)),
+      };
+    }
+  } catch (ex) {
+    console.error('error fetching speakers', ex);
+  }
+}
 
 function toEventInfo(source: any): EventInfo {
   return {
