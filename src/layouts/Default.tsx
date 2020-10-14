@@ -4,6 +4,7 @@ import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 
 const HomePage = lazy(() => import('pages/Home'));
+const EventDayPage = lazy(() => import('pages/EventDay'));
 const SpeakersPage = lazy(() => import('pages/Speakers'));
 const TalkPage = lazy(() => import('pages/Talk'));
 
@@ -18,6 +19,9 @@ export function Default() {
             <Switch>
               <Route exact path="/">
                 <HomePage />
+              </Route>
+              <Route path="/event/:date">
+                <EventDayPage />
               </Route>
               <Route path="/speakers">
                 <SpeakersPage />

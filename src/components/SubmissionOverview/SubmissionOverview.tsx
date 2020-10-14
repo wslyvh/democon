@@ -6,7 +6,11 @@ import { Submission } from 'types/Submission';
 import { EventDates } from './EventDates';
 import { TrackBadge } from './TrackBadge';
 
-export function SubmissionOverview() {
+interface SubmissionOverviewProps {
+  showFilter?: boolean;
+}
+
+export function SubmissionOverview(props: SubmissionOverviewProps) {
   const [eventDates, setEventDates] = useState(new Array<Date>());
   const [filtered, setFiltered] = useState(new Array<Submission>());
   const [submissions, setSubmissions] = useState({
@@ -56,17 +60,16 @@ export function SubmissionOverview() {
 
   return (
     <div>
-      <EventDates dates={eventDates} onSelect={onSelectDate} />
+      {props.showFilter && (
+        <EventDates dates={eventDates} onSelect={onSelectDate} />
+      )}
 
       {filtered.map((i: Submission) => {
         return (
           <div className="card mb-2" key={i.code}>
             <div className="card-body">
               <h5 className="card-title">
-                <Link
-                  to={'/talk/' + i.code}
-                  className="stretched-link"
-                >
+                <Link to={'/talk/' + i.code} className="stretched-link">
                   {i.title}
                 </Link>
               </h5>
