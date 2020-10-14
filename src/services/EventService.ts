@@ -7,6 +7,7 @@ import { Room, Slot, Submission } from 'types/Submission';
 export default {
   GetEventInfo,
   GetTalks,
+  GetTalk,
   GetSpeakers,
 };
 
@@ -50,6 +51,29 @@ async function GetTalks(
         previous: result.data.previous,
         data: Array.from(result.data.results).map((i) => toSubmission(i)),
       };
+    }
+  } catch (ex) {
+    console.error('error fetching talks', ex);
+  }
+}
+
+async function GetTalk(code: string): Promise<Submission | undefined> {
+  try {
+    const result = await axios.get(
+      `https://pretalx.com/api/events/democon/talks/` + code,
+      {
+        method: 'GET',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      }
+    );
+
+    console.log('GetTalk', code, result);
+    if (result.status === 200) {
+      return toSubmission(result.data);
     }
   } catch (ex) {
     console.error('error fetching talks', ex);
@@ -125,6 +149,11 @@ function toSpeaker(source: any): Speaker {
     name: source.name,
     biography: source.biography,
     avatar: source.avatar,
+    submissions: source.submissions
+      ? Array.from(source.submissions).map((i) => {
+          return { code: i };
+        })
+      : [],
   } as Speaker;
 }
 

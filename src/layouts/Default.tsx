@@ -5,6 +5,7 @@ import { Loader } from 'components/Loader';
 
 const HomePage = lazy(() => import('pages/Home'));
 const SpeakersPage = lazy(() => import('pages/Speakers'));
+const TalkPage = lazy(() => import('pages/Talk'));
 
 export function Default() {
   return (
@@ -20,6 +21,9 @@ export function Default() {
               </Route>
               <Route path="/speakers">
                 <SpeakersPage />
+              </Route>
+              <Route path="/talk/:id">
+                <TalkPage />
               </Route>
               <Redirect to="/" />
             </Switch>

@@ -2,6 +2,7 @@ import { Loader } from 'components/Loader';
 import React, { useEffect, useState } from 'react';
 import EventService from 'services/EventService';
 import { Speaker } from 'types/Speaker';
+import { SubmissionLinks } from './SubmissionLinks';
 
 export function SpeakerOverview() {
   const [speakers, setSpeakers] = useState({
@@ -38,11 +39,17 @@ export function SpeakerOverview() {
 
   return (
     <div>
-      <ul>
-        {speakers.data.map((i) => (
-          <li key={i.code}>{i.name}</li>
-        ))}
-      </ul>
+      {speakers.data.map((i: Speaker) => {
+        return (
+          <div className="card mb-2" key={i.code}>
+            <div className="card-body">
+              <h5 className="card-title">{i.name}</h5>
+              <p className="card-text">{i.biography}</p>
+              {i.submissions && <SubmissionLinks submissions={i.submissions} />}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
