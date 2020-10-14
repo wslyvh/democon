@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import EventService from 'services/EventService';
 import { Submission } from 'types/Submission';
 import moment from 'moment';
+import { SpeakerList } from './SpeakerList';
 
 interface TalkDetailsProps {
   id: string;
@@ -21,7 +22,7 @@ export function TalkDetails(props: TalkDetailsProps) {
   useEffect(() => {
     async function asyncEffect() {
       const submission = await EventService.GetTalk(props.id);
-
+      console.log(submission);
       setSubmission({
         loading: false,
         data: submission,
@@ -53,6 +54,7 @@ export function TalkDetails(props: TalkDetailsProps) {
       </p>
       <TrackBadge type={submission.data.track} />
       <p>{submission.data.description}</p>
+      <SpeakerList speakers={submission.data.speakers} />
     </div>
   );
 }
