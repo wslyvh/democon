@@ -1,5 +1,6 @@
 import { Loader } from 'components/Loader';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import EventService from 'services/EventService';
 import { Submission } from 'types/Submission';
 import { EventDates } from './EventDates';
@@ -61,7 +62,14 @@ export function SubmissionOverview() {
         return (
           <div className="card mb-2" key={i.code}>
             <div className="card-body">
-              <h5 className="card-title">{i.title}</h5>
+              <h5 className="card-title">
+                <Link
+                  to={'/talk/' + i.code}
+                  className="stretched-link"
+                >
+                  {i.title}
+                </Link>
+              </h5>
               <h6 className="card-subtitle mb-2 text-muted">
                 <span className="mr-2">{i.slot.start.toLocaleString()}</span>
                 <small>{i.slot.room['en']}</small>

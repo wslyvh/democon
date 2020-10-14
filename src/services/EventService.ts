@@ -62,22 +62,28 @@ async function GetTalks(
 
 async function GetTalk(code: string): Promise<Submission | undefined> {
   try {
-    const result = await axios.get(
-      `https://pretalx.com/api/events/democon/talks/` + code,
-      {
-        method: 'GET',
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      }
-    );
+    const talks = await GetTalks('', '', '', 100, 0);
+    return talks?.data.find((i) => i.code === code);
 
-    console.log('GetTalk', code, result);
-    if (result.status === 200) {
-      return toSubmission(result.data);
-    }
+    // The submission endpoint doesn't allow for cross-origin requests and no back-end implemented is implemented yet.
+    // Workaround is to get all talks and filter from there.
+
+    // const result = await axios.get(
+    //   `https://pretalx.com/api/events/democon/talks/` + code,
+    //   {
+    //     method: 'GET',
+    //     headers: {
+    //       'Access-Control-Allow-Origin': '*',
+    //       'Content-Type': 'application/json',
+    //     },
+    //     withCredentials: true,
+    //   }
+    // );
+
+    // console.log('GetTalk', code, result);
+    // if (result.status === 200) {
+    //   return toSubmission(result.data);
+    // }
   } catch (ex) {
     console.error('error fetching talks', ex);
   }

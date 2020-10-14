@@ -1,9 +1,12 @@
+import { TrackBadge } from 'components/SubmissionOverview/TrackBadge';
 import React, { useEffect, useState } from 'react';
 import EventService from 'services/EventService';
 import { Submission } from 'types/Submission';
+import moment from 'moment';
 
 interface TalkDetailsProps {
   id: string;
+  setTitle: (title: string | undefined) => void;
 }
 
 type DefaultStateType<T> = {
@@ -18,16 +21,17 @@ export function TalkDetails(props: TalkDetailsProps) {
   useEffect(() => {
     async function asyncEffect() {
       const submission = await EventService.GetTalk(props.id);
-      console.log(submission);
+
       setSubmission({
         loading: false,
         data: submission,
         error: submission === undefined ? true : false,
       });
+      props.setTitle(submission?.title);
     }
 
     asyncEffect();
-  }, [props.id]);
+  }, [props]);
 
   if (submission?.data === undefined) {
     return <></>;
@@ -35,7 +39,20 @@ export function TalkDetails(props: TalkDetailsProps) {
 
   return (
     <div>
-      <h3>{submission.data.title}</h3>
+      <h3>
+        <small>{submission.data.abstract}</small>
+      </h3>
+      <p>
+        {moment(submission.data.slot.start).format('LT')} -{' '}
+        {moment(submission.data.slot.end).format('LT')} (
+        {moment(submission.data.slot.end).diff(
+          submission.data.slot.start,
+          'minutes'
+        )}{' '}
+        min)
+      </p>
+      <TrackBadge type={submission.data.track} />
+      <p>{submission.data.description}</p>
     </div>
   );
 }

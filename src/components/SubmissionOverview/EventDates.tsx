@@ -12,7 +12,7 @@ export const EventDates = (props: EventDatesProps) => {
         return (
           <button
             key={i.toString()}
-            className="btn btn-outline-secondary mx-2"
+            className="btn btn-outline-secondary m-2"
             type="button"
             id="search-button"
             onClick={() => props.onSelect(i.toDateString())}
