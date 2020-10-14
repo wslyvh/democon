@@ -10,6 +10,7 @@ export default {
   GetTalk,
   GetSpeakers,
   GetEventDates,
+  GetEventRooms,
 };
 
 async function GetEventInfo(): Promise<EventInfo | undefined> {
@@ -128,6 +129,15 @@ function GetEventDates(submissions: Array<Submission>): Array<Date> {
   );
 
   return uniqueDates.map((i) => new Date(i));
+}
+
+function GetEventRooms(submissions: Array<Submission>): Array<string> {
+  return submissions
+    .map((i) => i.slot.room['en'])
+    .filter(
+      (item: string, index: number, array: string[]) =>
+        array.findIndex((i) => i === item) === index
+    );
 }
 
 function toEventInfo(source: any): EventInfo {

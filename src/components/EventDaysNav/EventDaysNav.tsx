@@ -26,7 +26,8 @@ export function EventDaysNav() {
       {eventDates.map((i: Date) => {
         return (
           <Link
-            to={'event/' + moment(i).format('YYYYMMDD')}
+            key={i.toString()}
+            to={'/event/' + moment(i).format('YYYYMMDD')}
             className="btn btn-outline-secondary m-2"
           >
             {i.toDateString()}

@@ -9,7 +9,6 @@ export default function Home() {
         <h2>Event Days</h2>
         <EventDaysNav />
       </div>
-      <hr />
       <div>
         <h2>All Events</h2>
         <SubmissionOverview />

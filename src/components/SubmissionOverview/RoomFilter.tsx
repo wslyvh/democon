@@ -1,23 +1,29 @@
 import React from 'react';
+import { getRoomColor } from 'utils/format';
 
-interface EventDatesProps {
-  dates: Array<Date>;
-  onSelect: (date: string) => void;
+interface RoomFilterProps {
+  rooms: Array<string>;
+  onSelect: (room: string) => void;
 }
 
-export const EventDates = (props: EventDatesProps) => {
+export const RoomFilter = (props: RoomFilterProps) => {
   return (
     <div className="text-center mb-4">
-      {props.dates.map((i: Date) => {
+      {props.rooms.map((i: string) => {
         return (
           <button
             key={i.toString()}
             className="btn btn-outline-secondary m-2"
             type="button"
             id="search-button"
-            onClick={() => props.onSelect(i.toDateString())}
+            onClick={() => props.onSelect(i)}
+            style={{
+              border: 2,
+              borderStyle: 'solid',
+              borderColor: getRoomColor(i),
+            }}
           >
-            {i.toLocaleDateString()}
+            {i}
           </button>
         );
       })}

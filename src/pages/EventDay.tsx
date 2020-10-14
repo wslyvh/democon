@@ -1,6 +1,6 @@
 import { EventDayCalendar } from 'components/EventDayCalendar';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
 export default function Talk() {
@@ -8,8 +8,10 @@ export default function Talk() {
   const currentDate = moment(date);
 
   return (
-    <div>
-      <h2>{currentDate.format('LL')}</h2>
-    </div>
+    <>
+      <div>
+        <EventDayCalendar selectedDate={currentDate.toDate()} />
+      </div>
+    </>
   );
 }
